@@ -5,6 +5,8 @@ name: TechTrends - Package with Docker
 on:
   push:
     branches: [ master, development ]
+    tags:
+      - 'v*.*.*'
   pull_request:
     branches: [ master, development ]
 
@@ -20,6 +22,18 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
+      -
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            durbin164/techtrends
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -39,5 +53,6 @@ jobs:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64
-          push: true
-          tags: durbin164/techtrends:latest
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

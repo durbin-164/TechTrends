@@ -92,14 +92,16 @@ def create():
 #helath check router
 @app.route('/healthz')
 def health():
-    response = app.response_class(
-            response=json.dumps({"result":"OK - healthy"}),
-            status=200,
-            mimetype='application/json'
-    )
+    message = "OK - healthy"
+    try:
+        posts = get_posts()
+        return {'resutls': message}, 200
+    except Exception as e:
+        app.logger.exception(e)
+        message = 'ERROR - unhealthy'
+        return {'results': message}, 500
 
-    app.logger.info('Helthz request successfull')
-    return response
+
 
 #metrics router
 @app.route('/metrics')
