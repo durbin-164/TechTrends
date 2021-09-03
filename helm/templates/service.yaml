@@ -9,7 +9,7 @@ spec:
   ports:
   - port: {{.Values.service.port}}
     protocol: {{.Values.service.protocol}}
-    {{if has "targetPort" .Values.service}}
+    {{if .Values.service.targetPort}}
     targetPort: {{.Values.service.targetPort}}
     {{else }}
     targetPort: {{.Values.service.port}}
