@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: techtrands-nodeport-staging
+  name: techtrands-nodeport-staging
+  namespace: staging
+spec:
+  ports:
+  - port: 5111
+    protocol: TCP
+    targetPort: 3111
+    nodePort: 30511
+  selector:
+    app: techtrands
+  sessionAffinity: None
+  type: NodePort

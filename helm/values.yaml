@@ -9,7 +9,7 @@ service:
 
 image:
   repository: durbin164/techtrends
-  tag: master
+  tag: latest
   pullPolicy: IfNotPresent
 
 replicaCount: 1

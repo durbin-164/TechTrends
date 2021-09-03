@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: techtrands-nodeport-prod
+  name: techtrands-nodeport-prod
+  namespace: prod
+spec:
+  ports:
+  - port: 7111
+    protocol: TCP
+    targetPort: 3111
+    nodePort: 30711
+  selector:
+    app: techtrands
+  sessionAffinity: None
+  type: NodePort
