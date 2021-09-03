@@ -9,7 +9,12 @@ spec:
   ports:
   - port: {{.Values.service.port}}
     protocol: {{.Values.service.protocol}}
+    {{if has .Values.service.targetPort}}
     targetPort: {{.Values.service.targetPort}}
+    {{else }}
+    targetPort: {{.Values.service.port}}
+    {{end}}
+
   selector:
     app: techtrands
   type: {{.Values.service.type}}
